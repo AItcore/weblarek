@@ -1,4 +1,4 @@
-import { IProduct } from '../../types/index';
+import { IProduct } from "../../types/index";
 
 export class ShoppingCart {
   protected selectedProducts: IProduct[];
@@ -16,7 +16,9 @@ export class ShoppingCart {
   }
 
   deleteSelectedProduct(id: string) {
-    this.selectedProducts = this.selectedProducts.filter(selectedProduct => selectedProduct.id !== id);
+    this.selectedProducts = this.selectedProducts.filter(
+      (selectedProduct) => selectedProduct.id !== id,
+    );
   }
 
   clearShoppingCart() {
@@ -24,7 +26,10 @@ export class ShoppingCart {
   }
 
   getTotal(): number {
-    return this.selectedProducts.reduce((total, selectedProduct) => total + (selectedProduct.price || 0), 0);
+    return this.selectedProducts.reduce(
+      (total, selectedProduct) => total + (selectedProduct.price || 0),
+      0,
+    );
   }
 
   getSelectedProductsAmount(): number {
@@ -32,6 +37,8 @@ export class ShoppingCart {
   }
 
   checkSelectedProduct(id: string): boolean {
-    return this.selectedProducts.some(selectedProduct => selectedProduct.id === id);
+    return this.selectedProducts.some(
+      (selectedProduct) => selectedProduct.id === id,
+    );
   }
 }
