@@ -13,10 +13,10 @@ export class ServerApi {
   }
 
   async getProducts(): Promise<IOrderResultApi> {
-    return this.api.get("/product/");
+    return this.api.get<IOrderResultApi>("/product/");
   }
 
   async postOrder(orderRequest: IOrderRequest): Promise<TOrderResponse> {
-    return this.api.post("/order/", orderRequest);
+    return this.api.post<TOrderResponse>("/order/", orderRequest);
   }
 }

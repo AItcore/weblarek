@@ -16,27 +16,39 @@ const communication = new ServerApi(api);
 const apiProd = apiProducts;
 
 catalog.saveProducts(apiProd.items);
-console.log(catalog.getProducts());
-console.log(catalog.getProductByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
+console.log("Загруженные товары", catalog.getProducts());
+console.log("Товар по ID",catalog.getProductByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
 catalog.saveProduct(apiProd.items[2]);
-console.log(catalog.getProduct());
+console.log("Выбранный товар",catalog.getProduct());
 
 cart.addSelectedProduct(apiProd.items[1]);
-console.log(cart.getSelectedProducts());
 cart.addSelectedProduct(apiProd.items[2]);
-console.log(cart.getTotal(), cart.getSelectedProductsAmount());
-console.log(cart.checkSelectedProduct("b06cde61-912f-4663-9751-09956c0eed67"));
+console.log("Добавленый товар в корзину",cart.getSelectedProducts());
+console.log("Всего стоит",cart.getTotal(), "Количество",cart.getSelectedProductsAmount());
+console.log("Есть ли в корзине товар",cart.checkSelectedProduct("b06cde61-912f-4663-9751-09956c0eed67"));
 cart.deleteSelectedProduct("b06cde61-912f-4663-9751-09956c0eed67");
-console.log(cart.checkSelectedProduct("b06cde61-912f-4663-9751-09956c0eed67"));
+console.log("Есть ли в корзине товар после удаления",cart.checkSelectedProduct("b06cde61-912f-4663-9751-09956c0eed67"));
 cart.clearShoppingCart();
-console.log(cart.getSelectedProducts());
+console.log("Корзина после очистки",cart.getSelectedProducts());
 
+
+console.log("Валидация данных перед вставкой данных",buyer.validate());
 buyer.saveEmail("aa@exm.com");
-console.log(buyer.getData());
 buyer.savePhone("8912345");
-console.log(buyer.validate());
-console.log(buyer.getData());
+buyer.saveAddress("sl 1");
+buyer.savePaymentType("cash");
+console.log("Вставленные данные: ", buyer.getData());
+console.log("Валидация данных",buyer.validate());
+buyer.clearBuyerData();
+console.log("Вывод данных после очистки",buyer.getData());
 
-console.log(communication.getProducts());
-communication.getProducts().then((data) => catalog.saveProducts(data.items));
-console.log(catalog.getProducts());
+console.log("Данные каталога: ",catalog.getProducts());
+communication
+  .getProducts()
+  .then((data) => {
+    catalog.saveProducts(data.items);
+    console.log("Загруженные товары: ",catalog.getProducts());
+  })
+  .catch((error) => {
+    console.error("Ошибка при получении товаров:", error);
+  });
